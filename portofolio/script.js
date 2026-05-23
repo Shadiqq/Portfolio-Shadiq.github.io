@@ -1,22 +1,18 @@
 (function () {
   "use strict";
 
-  // Helpers
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-  // Elements
   const navbar = $("nav");
   const navLinks = $$("nav ul li a");
   const sections = $$('section[id]');
   const typingElement = $(".hero-text h3");
   const heroImage = $(".hero-image img");
 
-  // Guard: kalau struktur berbeda dari yang diharapkan, jangan crash
   const canRunTyping = Boolean(typingElement);
   const canRunHeroImage = Boolean(heroImage);
 
-  // NAVBAR ACTIVE LINK + SHADOW + SCROLL UI (gabungkan 1 handler scroll)
   let currentId = "";
 
   const scrollBtn = document.createElement("button");
@@ -43,15 +39,12 @@
   const onScroll = () => {
     const y = window.scrollY || 0;
 
-    // Shadow navbar
     if (navbar) {
       navbar.style.boxShadow = y > 50 ? "0 5px 20px rgba(0,0,0,0.3)" : "none";
     }
 
-    // Scroll to top button
     scrollBtn.style.display = y > 300 ? "block" : "none";
 
-    // Active link
     let nextId = "";
     for (const section of sections) {
       const sectionTop = section.offsetTop;
@@ -70,7 +63,6 @@
       }
     }
 
-    // Fade/scale hero image
     if (canRunHeroImage) {
       const scale = 1 + y / 5000;
       heroImage.style.transform = `scale(${scale})`;
@@ -79,8 +71,7 @@
 
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
-
-  // TYPING EFFECT
+  
   if (canRunTyping) {
     const roles = [
       "Network Engineer",
